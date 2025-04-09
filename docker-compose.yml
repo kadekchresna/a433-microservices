@@ -1,0 +1,25 @@
+# version compose syntax 
+version: "3.8"
+services:
+  #item-db 
+  item-db:
+    #item-db will use mongo:3 image from docker hub
+    image: "mongo:3"
+    #item-db will use volume app-db and mount it to /data/db
+    volumes:
+      - app-db:/data/db
+  #item-app
+  item-app:
+    #item-app will use item-app:v1 image from github package from kadekchresna repository
+    image: "ghcr.io/kadekchresna/item-app:v1"
+    #expose item-app port 8080 to port 80 on host 
+    ports:
+      - "80:8080"
+    #item-app will wait until the item-db is started
+    depends_on:
+      - item-db
+    #item-app will always be restart until it be removed
+    restart: always
+volumes:
+  #define volume for item-db
+  app-db:
