@@ -42,7 +42,7 @@ jobs:
     needs: test-app
     runs-on: ubuntu-latest
     env:
-      CR_PAT: ${{ secrets.CR_PAT }}
+      CR_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
     - name: Checkout code
@@ -53,5 +53,4 @@ jobs:
 
     - name: Run Build
       run: |
-        echo $CR_PAT
         ./build_push_image_karsajobs.sh
