@@ -41,6 +41,8 @@ jobs:
   build-app-karsajobs:
     needs: test-app
     runs-on: ubuntu-latest
+    env:
+      PROD_API_KEY: ${{ secrets.PROD_API_KEY }}
 
     steps:
     - name: Checkout code
@@ -49,7 +51,12 @@ jobs:
     - name: Make build script executable
       run: chmod +x ./build_push_image_karsajobs.sh
 
+    - name: Create .env file
+      run: |
+        echo "CR_PAT=${{ secrets.CR_PAT }}" >> .env
+
     - name: Run Build
       run: |
-        export CR_PAT=${{ secrets.CR_PAT }}
+        cat .env
+        source .env
         ./build_push_image_karsajobs.sh
