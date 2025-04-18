@@ -51,5 +51,5 @@ jobs:
 
     - name: Run Build
       run: |
-        export CR_PAT=${{ secret.CR_PAT }}
+        export CR_PAT=${{ secrets.CR_PAT }}
         ./build_push_image_karsajobs.sh
